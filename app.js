@@ -3,7 +3,8 @@ const list = document.querySelector("[data-list]");
 const form = document.querySelector("form");
 const clearCompletedBtn = document.querySelector("[data-clear-completed]");
 const lengthTodos = document.querySelector("[data-length-todos]");
-// const card = document.querySelector(".card");
+const card = document.querySelector(".card");
+const cardBody = document.querySelector(".card-bottom");
 
 new Sortable(list, {
   animation: 350,
@@ -22,13 +23,24 @@ let TODOS = [
   },
 ];
 
+function showAllTodos() {
+  if (TODOS.length > 0) list.innerHTML = "";
+
+  TODOS.forEach(
+    (todo) =>
+      (list.innerHTML += `<li id=${
+        todo.id
+      }><div class="badge"><input type="checkbox" ${
+        todo.completed && "checked"
+      } onchange="completeTodo(this)"/></div><span class=${
+        todo.completed && "completedTodo"
+      } >${todo.text}</span> <span onClick="deleteTodo(this)" class="delete">
+      <img src="./images/delete.svg" width="15px" height="15px" alt="">
+    </span></li>`)
+  );
+}
 // FOR TESTING INITIAL TODO_ITEMS
-TODOS.forEach(
-  (todo) =>
-    (list.innerHTML += `<li id=${todo.id}><div class="badge"><input type="checkbox" onchange="completeTodo(this)"/></div><span>${todo.text}</span> <span onClick="deleteTodo(this)" class="delete">
-    <img src="./images/delete.svg" width="15px" height="15px" alt="">
-  </span></li>`)
-);
+showAllTodos();
 
 function updateTheTodosLength() {
   lengthTodos.innerText = TODOS.length;
@@ -102,7 +114,6 @@ function completeTodo(e) {
       todo.completed = !todo.completed;
     }
   });
-
   console.log(TODOS);
 }
 
@@ -118,4 +129,55 @@ function clearCompleted() {
       listItem.remove();
     }
   });
+}
+
+// show only completed
+function ShowOnlyCompletedTodos() {
+  const onlyCompleted = TODOS.filter((todo) => todo.completed !== false);
+  if (onlyCompleted.length > 0) list.innerHTML = "";
+
+  onlyCompleted.forEach(
+    (todo) =>
+      (list.innerHTML += `<li id=${todo.id}><div class="badge"><input type="checkbox" checked onchange="completeTodo(this)"/></div><span class="completedTodo">${todo.text}</span> <span onClick="deleteTodo(this)" class="delete">
+      <img src="./images/delete.svg" width="15px" height="15px" alt="">
+    </span></li>`)
+  );
+  return onlyCompleted;
+}
+
+function showOnlyActive() {
+  const notCompleted = TODOS.filter((todo) => todo.completed !== true);
+
+  if (notCompleted.length > 0) list.innerHTML = "";
+
+  notCompleted.forEach(
+    (todo) =>
+      (list.innerHTML += `<li id=${todo.id}><div class="badge"><input type="checkbox" onchange="completeTodo(this)"/></div><span>${todo.text}</span> <span onClick="deleteTodo(this)" class="delete">
+      <img src="./images/delete.svg" width="15px" height="15px" alt="">
+    </span></li>`)
+  );
+
+  console.log(TODOS);
+}
+
+function changeStyle(e) {
+  e.classList.add("hide");
+  e.previousElementSibling.classList.remove("hide");
+  e.previousElementSibling.classList.add("show");
+
+  document.body.style.background = "#171823";
+  cardBody.classList.add("cardBg");
+  list.childNodes.forEach((item) => item.classList.add("listItemDark"));
+  card.classList.add("cardBg");
+}
+
+function changeToSun(e) {
+  e.classList.add("hide");
+  e.nextElementSibling.classList.remove("hide");
+  e.nextElementSibling.classList.add("show");
+
+  document.body.style.background = "#fff";
+  cardBody.classList.remove("cardBg");
+  list.childNodes.forEach((item) => item.classList.remove("listItemDark"));
+  card.classList.remove("cardBg");
 }

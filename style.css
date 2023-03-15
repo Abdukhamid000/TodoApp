@@ -48,6 +48,32 @@ form {
   height: 439px;
 }
 
+.card-bottom {
+  display: flex;
+  position: relative;
+  z-index: 9999;
+  width: 540px;
+  background: #ffffff;
+  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  border-radius: 5px;
+  padding: 16px 24px;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: -0.194444px;
+  color: #9495a5;
+}
+
+.card-bottom span {
+  cursor: pointer;
+}
+
+.filter span,
+.filter {
+  margin-left: 19px;
+}
+
 .card img {
   display: flex;
 }
@@ -97,4 +123,60 @@ input[type="checkbox"] {
   font-size: 18px;
   line-height: 18px;
   letter-spacing: -0.25px;
+}
+
+input[type="checkbox"] {
+  background-color: red !important;
+  color: white;
+}
+
+.top {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  top: 50px;
+  width: 540px;
+  justify-content: space-between;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.top h1 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: 15px;
+  color: #ffffff;
+}
+
+.top img {
+  cursor: pointer;
+}
+
+.blackBg {
+  background: #171823;
+}
+
+.cardBg {
+  background: #25273d;
+  box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+.listItemDark {
+  border-bottom: 1px solid #393a4b !important;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -0.25px;
+  color: #c8cbe7;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
