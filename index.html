@@ -5,23 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Todo App</title>
   </head>
   <body>
+    <img class="bg" src="./images/Bitmap.png" alt="" />
     <div class="todo">
       <form class="new-todo">
-        <input type="text" data-input />
+        <input type="text" data-input placeholder="Create a new todo…"/>
       </form>
-
       <div class="card">
         <ul data-list>
           <li>
             <div class="badge">
-              <input type="checkbox" checked onchange="completeTodo(this)"/>
+              <input type="checkbox" checked onchange="completeTodo(this)" />
             </div>
             <span>Jog around the park 3x</span>
-            <button onclick="deleteTodo(this)">delete</button>
+            <span class="delete">
+              <img src="./images/delete.svg" width="15px" height="15px" alt="">
+            </span>
           </li>
+          
+        </div>
+        <div>
+          <span data-length-todos></span>
+          <button data-clear-completed>clear completed</button>
+        </div>
         </ul>
       </div>
     </div>

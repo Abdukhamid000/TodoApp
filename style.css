@@ -1,14 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;500;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Outfit:wght@200;400;600;800&family=Roboto:wght@300;400;500;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.completedTodo {
+  text-decoration: line-through;
+  color: #d1d2da;
+}
+
+body {
+  font-family: "Josefin Sans", "Outfit", sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  z-index: 999;
+  position: relative;
+  width: 540px;
+  height: 64px;
+  background: #fff;
+  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  border-radius: 5px;
+  margin-bottom: 24px;
+  padding: 20px 24px;
+}
+
+.card {
+  overflow-y: auto;
+  z-index: 999;
+  position: relative;
+  background: #ffffff;
+  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  border-radius: 5px;
+  width: 540px;
+  height: 439px;
+}
+
+.card img {
+  display: flex;
+}
+
+.delete {
+  cursor: pointer;
+  visibility: hidden;
+}
+
+li:hover .delete {
+  visibility: visible;
+}
+
 li {
   list-style-type: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+}
+
+li:not(:last-child) {
+  border-bottom: 1px solid #e3e4f1;
 }
 
 input {
   outline: none;
 }
 
+input[type="text"] {
+  height: 100%;
+  border: none;
+  color: #9495a5;
+  font-size: 18px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 .error {
   border: 1px solid red;
 }
 
+.todo {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -0.25px;
+}
