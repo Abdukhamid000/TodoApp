@@ -1,0 +1,14 @@
+li {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  outline: none;
+}
+
+.error {
+  border: 1px solid red;
+}
+
