@@ -11,13 +11,18 @@
     <title>Todo App</title>
   </head>
   <body>
-    <img class="bg" src="./images/Bitmap.png" alt="" />
-  
-    <div class="top">
-      <h1>TODO</h1>
-        <i id="toggle-btn" class="fas fa-moon" style="font-size: 40px; color: #fff; cursor: pointer">
-        </i>
+
+
+    <div class="backFon">
+
+      <div class="backFon-text">
+<h1>Todo</h1>
+<span >
+  <i id="toggle-btn" class="fas fa-moon"></i>
+</span>
+      </div>
     </div>
+   
     <div class="todo">
       <form class="new-todo">
         <input type="text" data-input placeholder="Create a new todo…"/>
@@ -27,19 +32,30 @@
       
         </ul>
         </div>
+
+        <div class="card-bottom-sm">
+          <div style="display:flex; justify-content: space-between">
+
+            <span data-length-todo>0</span>
+            <span data-clear-completedd>Clear Completed</span>
+          </div>
+        </div>
         
         <div class="card-bottom">
-          <span data-length-todos></span>
+          <span data-length-todos>0</span>
           <div class="filter">
             <span onclick="showAllTodos(this)">All</span>
             <span onclick="showOnlyActive(this)">Active</span>
             <span onclick="ShowOnlyCompletedTodos(this)">Completed</span>
           </div>
+          
           <span data-clear-completed>Clear Completed</span>
         </div>
      
       </div>
     </div>
+
+    <h5>Drag and drop to reorder list</h5>
 
     <script src="./app.js"></script>
   </body>

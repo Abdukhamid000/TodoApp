@@ -6,13 +6,27 @@ const lengthTodos = document.querySelector("[data-length-todos]");
 const card = document.querySelector(".card");
 const cardBody = document.querySelector(".card-bottom");
 const toggleBtn = document.querySelector("#toggle-btn");
+const backFon = document.querySelector(".backFon");
 let darkMode = localStorage.getItem("dark-mode");
 
-let TODOS = [];
+let TODOS = [
+  {
+    id: 1,
+    text: "😎 MY TODO APP",
+    completed: false,
+  },
+];
+
+// if (!localStorage.getItem("todos")) {
+//   localStorage.setItem("todos", JSON.stringify(TODOS));
+// } else {
+//   TODOS = JSON.parse(localStorage.getItem("todos"));
+// }
 
 function enableDarkMode() {
   toggleBtn.classList.replace("fa-moon", "fa-sun");
   document.body.classList.add("dark");
+  backFon.classList.replace("backFon", "backFonDark");
 
   localStorage.setItem("dark-mode", "enabled");
 }
@@ -20,6 +34,7 @@ function enableDarkMode() {
 function disableDarkMode() {
   toggleBtn.classList.replace("fa-sun", "fa-moon");
   document.body.classList.remove("dark");
+  backFon.classList.replace("backFonDark", "backFon");
 
   localStorage.setItem("dark-mode", "disabled");
 }
@@ -29,7 +44,6 @@ if (darkMode === "enabled") {
 }
 
 toggleBtn.addEventListener("click", () => {
-  console.log("e");
   darkMode = localStorage.getItem("dark-mode");
   if (darkMode === "disabled") {
     enableDarkMode();
@@ -86,12 +100,11 @@ form.addEventListener("keydown", (e) => {
   if (e.keyCode === 13) {
     //check weather input is empty or not
     e.preventDefault();
-    if (input.value === "") {
+    if (input.value.trim() === "") {
       input.classList.add("error");
       setTimeout(clearError, 1000);
     } else {
       // SUCCESS
-      console.log(input.value);
       addNewTodo();
       updateTheTodosLength();
     }
@@ -104,6 +117,17 @@ function addNewTodo() {
     text: input.value,
     completed: false,
   };
+
+  // if (!localStorage.getItem("todos")) {
+  //   todos = [];
+  //   todos.push(newTodo);
+  //   localStorage.setItem("todos", JSON.stringify(todos));
+  // } else {
+  // }
+  // TODOS = JSON.parse(localStorage.getItem("todos"));
+  // TODOS.push(newTodo);
+
+  // localStorage.setItem("todos", JSON.stringify(TODOS));
 
   const li = document.createElement("li");
   li.setAttribute("id", newTodo.id);
@@ -122,6 +146,7 @@ function deleteTodo(e) {
   parentEl.remove();
 
   TODOS = TODOS.filter((todo) => parentEl.id != todo.id);
+  localStorage.setItem("todos", JSON.stringify(TODOS));
 
   updateTheTodosLength();
   console.log(TODOS);
@@ -129,9 +154,6 @@ function deleteTodo(e) {
 
 // COMPLETE TODO
 function completeTodo(e) {
-  console.log(e.checked);
-  console.log(e.parentElement.nextSibling);
-
   e.parentElement.nextSibling.classList.add("completedTodo");
 
   if (e.checked !== true) {
@@ -143,14 +165,16 @@ function completeTodo(e) {
       todo.completed = !todo.completed;
     }
   });
-  console.log(TODOS);
+  localStorage.setItem("todos", JSON.stringify(TODOS));
 }
 
 // CLEARING ALL COMPLETED TODOS
 function clearCompleted() {
   TODOS = TODOS.filter((todo) => todo.completed !== true);
   updateTheTodosLength();
-  console.log(TODOS);
+ 
+  // localStorage.setItem("todos", JSON.stringify(TODOS));
+
   const allListItems = document.querySelectorAll("li");
   console.log(allListItems);
   allListItems.forEach((listItem) => {
