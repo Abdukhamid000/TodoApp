@@ -5,26 +5,54 @@ const clearCompletedBtn = document.querySelector("[data-clear-completed]");
 const lengthTodos = document.querySelector("[data-length-todos]");
 const card = document.querySelector(".card");
 const cardBody = document.querySelector(".card-bottom");
+const toggleBtn = document.querySelector("#toggle-btn");
+let darkMode = localStorage.getItem("dark-mode");
+
+let TODOS = [];
+
+function enableDarkMode() {
+  toggleBtn.classList.replace("fa-moon", "fa-sun");
+  document.body.classList.add("dark");
+
+  localStorage.setItem("dark-mode", "enabled");
+}
+
+function disableDarkMode() {
+  toggleBtn.classList.replace("fa-sun", "fa-moon");
+  document.body.classList.remove("dark");
+
+  localStorage.setItem("dark-mode", "disabled");
+}
+
+if (darkMode === "enabled") {
+  enableDarkMode();
+}
+
+toggleBtn.addEventListener("click", () => {
+  console.log("e");
+  darkMode = localStorage.getItem("dark-mode");
+  if (darkMode === "disabled") {
+    enableDarkMode();
+  } else {
+    disableDarkMode();
+  }
+});
 
 new Sortable(list, {
   animation: 350,
 });
 
-let TODOS = [
-  {
-    id: 1,
-    text: "Jog around the park 3x",
-    completed: false,
-  },
-  {
-    id: 2,
-    text: "ME too",
-    completed: false,
-  },
-];
+function showAllTodos(e) {
+  if (TODOS.length > 0) {
+    list.innerHTML = "";
 
-function showAllTodos() {
-  if (TODOS.length > 0) list.innerHTML = "";
+    if (e) {
+      for (const child of e.parentElement.children) {
+        child.style.color = "";
+      }
+      e.style.color = "#3A7CFD";
+    }
+  }
 
   TODOS.forEach(
     (todo) =>
@@ -82,10 +110,10 @@ function addNewTodo() {
   li.innerHTML = `<div class="badge"><input type="checkbox" onchange="completeTodo(this)"/></div><span>${newTodo.text}</span> <span onClick=deleteTodo(this) class="delete">
   <img src="./images/delete.svg" width="15px" height="15px" alt="">
 </span>`;
-  console.log(li);
+
   list.appendChild(li);
   TODOS.push(newTodo);
-  console.log(TODOS);
+
   input.value = "";
 }
 
@@ -94,6 +122,7 @@ function deleteTodo(e) {
   parentEl.remove();
 
   TODOS = TODOS.filter((todo) => parentEl.id != todo.id);
+
   updateTheTodosLength();
   console.log(TODOS);
 }
@@ -132,9 +161,18 @@ function clearCompleted() {
 }
 
 // show only completed
-function ShowOnlyCompletedTodos() {
+function ShowOnlyCompletedTodos(e) {
   const onlyCompleted = TODOS.filter((todo) => todo.completed !== false);
-  if (onlyCompleted.length > 0) list.innerHTML = "";
+  console.log(e.parentElement.children);
+
+  if (onlyCompleted.length > 0) {
+    list.innerHTML = "";
+
+    for (const child of e.parentElement.children) {
+      child.style.color = "";
+    }
+    e.style.color = "#3A7CFD";
+  }
 
   onlyCompleted.forEach(
     (todo) =>
@@ -145,10 +183,17 @@ function ShowOnlyCompletedTodos() {
   return onlyCompleted;
 }
 
-function showOnlyActive() {
+function showOnlyActive(e) {
   const notCompleted = TODOS.filter((todo) => todo.completed !== true);
 
-  if (notCompleted.length > 0) list.innerHTML = "";
+  if (notCompleted.length > 0) {
+    list.innerHTML = "";
+
+    for (const child of e.parentElement.children) {
+      child.style.color = "";
+    }
+    e.style.color = "#3A7CFD";
+  }
 
   notCompleted.forEach(
     (todo) =>
@@ -156,28 +201,15 @@ function showOnlyActive() {
       <img src="./images/delete.svg" width="15px" height="15px" alt="">
     </span></li>`)
   );
-
-  console.log(TODOS);
 }
 
-function changeStyle(e) {
-  e.classList.add("hide");
-  e.previousElementSibling.classList.remove("hide");
-  e.previousElementSibling.classList.add("show");
+function personFactory(name, age) {
+  sayName = () => {
+    return name;
+  };
 
-  document.body.style.background = "#171823";
-  cardBody.classList.add("cardBg");
-  list.childNodes.forEach((item) => item.classList.add("listItemDark"));
-  card.classList.add("cardBg");
+  return { name, age, sayName };
 }
 
-function changeToSun(e) {
-  e.classList.add("hide");
-  e.nextElementSibling.classList.remove("hide");
-  e.nextElementSibling.classList.add("show");
-
-  document.body.style.background = "#fff";
-  cardBody.classList.remove("cardBg");
-  list.childNodes.forEach((item) => item.classList.remove("listItemDark"));
-  card.classList.remove("cardBg");
-}
+const p1 = personFactory("Alex", 31);
+console.log(p1.sayName());

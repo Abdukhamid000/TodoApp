@@ -1,9 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400;500;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Outfit:wght@200;400;600;800&family=Roboto:wght@300;400;500;700&display=swap");
 
+:root {
+  --light: #fff;
+  --dark: #171823;
+  --card-bg: #fff;
+  --border-item: #e3e4f1;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+body.dark {
+  --light: #000;
+  --dark: #fff;
+  --border-item: #393a4b;
+  --card-bg: #25273d;
 }
 
 .bg {
@@ -23,6 +37,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--light);
+  color: var(--dark);
 }
 
 form {
@@ -41,11 +57,12 @@ form {
   overflow-y: auto;
   z-index: 999;
   position: relative;
-  background: #ffffff;
+  background: var(--card-bg);
   box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   width: 540px;
-  height: 439px;
+  height: 350px;
 }
 
 .card-bottom {
@@ -53,9 +70,10 @@ form {
   position: relative;
   z-index: 9999;
   width: 540px;
-  background: #ffffff;
+  background: var(--card-bg);
   box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   padding: 16px 24px;
   justify-content: space-between;
   font-weight: 700;
@@ -63,6 +81,12 @@ form {
   line-height: 14px;
   letter-spacing: -0.194444px;
   color: #9495a5;
+}
+
+.new-todo {
+  background: var(--card-bg);
+  box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
 }
 
 .card-bottom span {
@@ -96,7 +120,7 @@ li {
 }
 
 li:not(:last-child) {
-  border-bottom: 1px solid #e3e4f1;
+  border-bottom: 1px solid var(--border-item);
 }
 
 input {
@@ -108,6 +132,7 @@ input[type="text"] {
   border: none;
   color: #9495a5;
   font-size: 18px;
+  background: var(--card-bg);
 }
 
 input[type="checkbox"] {
@@ -166,10 +191,6 @@ input[type="checkbox"] {
 
 .listItemDark {
   border-bottom: 1px solid #393a4b !important;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 18px;
-  letter-spacing: -0.25px;
   color: #c8cbe7;
 }
 
@@ -179,4 +200,21 @@ input[type="checkbox"] {
 
 .hide {
   display: none;
+}
+
+@media (max-width: 631px) {
+  .card-bottom > span {
+    display: none;
+  }
+
+  .card-bottom,
+  .top,
+  .card,
+  .new-todo {
+    width: 327px;
+  }
+
+  .filter {
+    margin-left: 20px;
+  }
 }
