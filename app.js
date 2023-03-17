@@ -17,11 +17,24 @@ let TODOS = [
   },
 ];
 
-// if (!localStorage.getItem("todos")) {
-//   localStorage.setItem("todos", JSON.stringify(TODOS));
-// } else {
-//   TODOS = JSON.parse(localStorage.getItem("todos"));
-// }
+if (!localStorage.getItem("todos")) {
+  localStorage.setItem("todos", JSON.stringify(TODOS));
+} else {
+  TODOS = JSON.parse(localStorage.getItem("todos"));
+  console.log(TODOS);
+}
+
+function saveToLocalStorage(newTodo) {
+  if (!localStorage.getItem("todos")) {
+    TODOS.push(newTodo);
+    localStorage.setItem("todos", JSON.stringify(TODOS));
+  } else {
+    TODOS = JSON.parse(localStorage.getItem("todos"));
+    TODOS.push(newTodo);
+    localStorage.setItem("todos", JSON.stringify(TODOS));
+  }
+  updateTheTodosLength();
+}
 
 function enableDarkMode() {
   toggleBtn.classList.replace("fa-moon", "fa-sun");
@@ -67,7 +80,7 @@ function showAllTodos(e) {
       e.style.color = "#3A7CFD";
     }
   }
-
+  TODOS = JSON.parse(localStorage.getItem("todos"));
   TODOS.forEach(
     (todo) =>
       (list.innerHTML += `<li id=${
@@ -85,7 +98,7 @@ function showAllTodos(e) {
 showAllTodos();
 
 function updateTheTodosLength() {
-  lengthTodos.innerText = TODOS.length;
+  lengthTodos.innerText = JSON.parse(localStorage.getItem("todos")).length;
 }
 updateTheTodosLength();
 
@@ -118,16 +131,7 @@ function addNewTodo() {
     completed: false,
   };
 
-  // if (!localStorage.getItem("todos")) {
-  //   todos = [];
-  //   todos.push(newTodo);
-  //   localStorage.setItem("todos", JSON.stringify(todos));
-  // } else {
-  // }
-  // TODOS = JSON.parse(localStorage.getItem("todos"));
-  // TODOS.push(newTodo);
-
-  // localStorage.setItem("todos", JSON.stringify(TODOS));
+  saveToLocalStorage(newTodo);
 
   const li = document.createElement("li");
   li.setAttribute("id", newTodo.id);
@@ -145,11 +149,10 @@ function deleteTodo(e) {
   const parentEl = e.parentElement;
   parentEl.remove();
 
+  TODOS = JSON.parse(localStorage.getItem("todos"));
   TODOS = TODOS.filter((todo) => parentEl.id != todo.id);
   localStorage.setItem("todos", JSON.stringify(TODOS));
-
   updateTheTodosLength();
-  console.log(TODOS);
 }
 
 // COMPLETE TODO
@@ -159,7 +162,7 @@ function completeTodo(e) {
   if (e.checked !== true) {
     e.parentElement.nextSibling.classList.remove("completedTodo");
   }
-
+  TODOS = JSON.parse(localStorage.getItem("todos"));
   TODOS.forEach((todo) => {
     if (e.parentElement.parentElement.id == todo.id) {
       todo.completed = !todo.completed;
@@ -170,10 +173,11 @@ function completeTodo(e) {
 
 // CLEARING ALL COMPLETED TODOS
 function clearCompleted() {
+  TODOS = JSON.parse(localStorage.getItem("todos"));
   TODOS = TODOS.filter((todo) => todo.completed !== true);
+  localStorage.setItem("todos", JSON.stringify(TODOS));
+
   updateTheTodosLength();
- 
-  // localStorage.setItem("todos", JSON.stringify(TODOS));
 
   const allListItems = document.querySelectorAll("li");
   console.log(allListItems);
@@ -186,15 +190,20 @@ function clearCompleted() {
 
 // show only completed
 function ShowOnlyCompletedTodos(e) {
+  TODOS = JSON.parse(localStorage.getItem("todos"));
+
+  input.setAttribute("disabled", "");
   const onlyCompleted = TODOS.filter((todo) => todo.completed !== false);
-  console.log(e.parentElement.children);
+
+  for (const child of e.parentElement.children) {
+    child.style.color = "";
+  }
 
   if (onlyCompleted.length > 0) {
     list.innerHTML = "";
-
-    for (const child of e.parentElement.children) {
-      child.style.color = "";
-    }
+    e.style.color = "#3A7CFD";
+  } else {
+    list.innerHTML = "OOPS!";
     e.style.color = "#3A7CFD";
   }
 
@@ -208,15 +217,19 @@ function ShowOnlyCompletedTodos(e) {
 }
 
 function showOnlyActive(e) {
+  input.setAttribute("disabled", "");
+  TODOS = JSON.parse(localStorage.getItem("todos"));
   const notCompleted = TODOS.filter((todo) => todo.completed !== true);
 
+  for (const child of e.parentElement.children) {
+    child.style.color = "";
+  }
   if (notCompleted.length > 0) {
     list.innerHTML = "";
-
-    for (const child of e.parentElement.children) {
-      child.style.color = "";
-    }
     e.style.color = "#3A7CFD";
+  } else {
+    e.style.color = "#3A7CFD";
+    list.innerHTML = "<li>😜 OOPS!</li>";
   }
 
   notCompleted.forEach(
@@ -226,14 +239,3 @@ function showOnlyActive(e) {
     </span></li>`)
   );
 }
-
-function personFactory(name, age) {
-  sayName = () => {
-    return name;
-  };
-
-  return { name, age, sayName };
-}
-
-const p1 = personFactory("Alex", 31);
-console.log(p1.sayName());
