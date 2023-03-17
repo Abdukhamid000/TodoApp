@@ -84,7 +84,7 @@ function showAllTodos(e) {
   input.removeAttribute("disabled");
   TODOS.forEach(
     (todo) =>
-      (list.innerHTML += `<li id=${
+      (list.innerHTML += `<li onclick="completeTodoLi(this)"  id=${
         todo.id
       }><div class="badge"><input type="checkbox" ${
         todo.completed && "checked"
@@ -155,6 +155,11 @@ function deleteTodo(e) {
   localStorage.setItem("todos", JSON.stringify(TODOS));
   updateTheTodosLength();
 }
+
+// function completeTodoLi(e) {
+//   console.log(e.children);
+//   console.log(e);
+// }
 
 // COMPLETE TODO
 function completeTodo(e) {
