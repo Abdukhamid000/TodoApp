@@ -81,6 +81,7 @@ function showAllTodos(e) {
     }
   }
   TODOS = JSON.parse(localStorage.getItem("todos"));
+  input.removeAttribute("disabled");
   TODOS.forEach(
     (todo) =>
       (list.innerHTML += `<li id=${
@@ -190,9 +191,9 @@ function clearCompleted() {
 
 // show only completed
 function ShowOnlyCompletedTodos(e) {
+  input.setAttribute("disabled", "");
   TODOS = JSON.parse(localStorage.getItem("todos"));
 
-  input.setAttribute("disabled", "");
   const onlyCompleted = TODOS.filter((todo) => todo.completed !== false);
 
   for (const child of e.parentElement.children) {
@@ -203,7 +204,7 @@ function ShowOnlyCompletedTodos(e) {
     list.innerHTML = "";
     e.style.color = "#3A7CFD";
   } else {
-    list.innerHTML = "OOPS!";
+    list.innerHTML = "<li>😜 OOPS!</li>";
     e.style.color = "#3A7CFD";
   }
 
